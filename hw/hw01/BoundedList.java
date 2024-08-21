@@ -25,12 +25,11 @@ public class BoundedList<T> implements List<T> {
     if (index < 0){
       throw new UnsupportedOperationException(" -- negative index");
     }
-    if (index > size()){
-      throw new UnsupportedOperationException(" -- adding more than +1 the current size");
-    }
-    System.out.println(index + " INDEX ---- LENGTH  " + elements.length );
     if (index >= elements.length){
       throw new UnsupportedOperationException(" -- outside the bounds of the fixedList at size " + elements.length);
+    }
+    if (index > size()){
+      throw new UnsupportedOperationException(" -- adding more than +1 the current size");
     }
     return elements[index];
   }
@@ -44,10 +43,10 @@ public class BoundedList<T> implements List<T> {
 
   @Override
   public void add(int index, T data) throws IndexOutOfBoundsException, IllegalStateException {
-    /*if(size() == elements.length){
+    if(size() == elements.length){
       throw new IllegalStateException(" -- list is full");
-    }*/
-
+    }
+    get(index);
     for(int i = index; i <= size(); i++){
       T temp = get(i);
       set(i, data);
@@ -65,7 +64,20 @@ public class BoundedList<T> implements List<T> {
 
   @Override
   public void remove(int index) throws IndexOutOfBoundsException {
-    throw new UnsupportedOperationException("DELETE THIS!");
+    
+    get(index);
+    if(size() == elements.length - 1){
+      set(index, null);
+      return;
+    }
+    for(int i = index; i < size() - 1; i++){
+      T temp = get(i+1);
+      set(i, temp);
+      if(temp == null){
+        return;
+      }
+    }
+    currentSize--;
   }
 
   @Override
@@ -80,7 +92,6 @@ public class BoundedList<T> implements List<T> {
     StringBuilder sb = new StringBuilder();
     sb.append("[ ");
     for (int i = 0; i < size(); ++i) {
-      System.out.println("help");
       sb.append(get(i).toString());
       sb.append(' ');
     }
@@ -97,12 +108,13 @@ public class BoundedList<T> implements List<T> {
     lst.add(0, 2);   // [ 2 1 ]
     lst.add(1, 3);   // [ 2 3 1 ]
     System.out.println(lst.toString());
-    lst.add(4, 4);   // IndexOutOfBoundsException -- adding more than +1 the current size
+    //lst.add(4, 4);   // IndexOutOfBoundsException -- adding more than +1 the current size
     //lst.add(5, 5);   // IndexOutOfBoundsException -- outside the bounds of the fixedList at size 5
     //lst.add(-1, -1); // IndexOutOfBoundsException -- negative index
     lst.add(3, 4);   // [ 2 3 1 4 ]
     lst.add(0, 5);   // [ 5 2 3 1 4 ]
     System.out.println(lst.toString());
+    lst.remove(2);
     lst.add(0, 6);   // IllegalStateException -- list is full
 
     System.out.println(lst.toString());

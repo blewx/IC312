@@ -23,13 +23,13 @@ public class BoundedList<T> implements List<T> {
       throw new UnsupportedOperationException("outside the bounds of the fixedList at size" + capacity);
     }*/
     if (index < 0){
-      throw new UnsupportedOperationException(" -- negative index");
+      throw new IndexOutOfBoundsException(" -- negative index");
     }
     if (index >= elements.length){
-      throw new UnsupportedOperationException(" -- outside the bounds of the fixedList at size " + elements.length);
+      throw new IndexOutOfBoundsException(" -- outside the bounds of the fixedList at size " + elements.length);
     }
     if (index > size()){
-      throw new UnsupportedOperationException(" -- adding more than +1 the current size");
+      throw new IndexOutOfBoundsException(" -- adding more than +1 the current size");
     }
     return elements[index];
   }
@@ -109,7 +109,7 @@ public class BoundedList<T> implements List<T> {
     lst.add(1, 3);   // [ 2 3 1 ]
     System.out.println(lst.toString());
     //lst.add(4, 4);   // IndexOutOfBoundsException -- adding more than +1 the current size
-    //lst.add(5, 5);   // IndexOutOfBoundsException -- outside the bounds of the fixedList at size 5
+    lst.add(5, 5);   // IndexOutOfBoundsException -- outside the bounds of the fixedList at size 5
     //lst.add(-1, -1); // IndexOutOfBoundsException -- negative index
     lst.add(3, 4);   // [ 2 3 1 4 ]
     lst.add(0, 5);   // [ 5 2 3 1 4 ]

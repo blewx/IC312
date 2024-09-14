@@ -25,7 +25,7 @@ public class MyText implements Text{
       resizeArray();
     }
     for(int i = currText.length - 1; i > cursorPosition; i--){
-        currText[i] = currText[i-1];
+      currText[i] = currText[i-1];
     }
     currText[cursorPosition] = c;
     moveRight();
@@ -54,6 +54,9 @@ public class MyText implements Text{
 
   /** Returns whether the cursor is NOT at the end. */
   public boolean canMoveRight(){
+    if(currText[cursorPosition + 1] == '\0'){
+      return false;
+    }
     return cursorPosition  !=  currText.length - 1;
   }
 
